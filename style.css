@@ -645,6 +645,7 @@ a:hover, a:active {
 .site-main .comment-navigation, .site-main .posts-navigation, .site-main .post-navigation {
     margin: 0 0 1.5em;
     overflow: hidden;
+    width: 100%;
 }
 
 .comment-navigation .nav-previous, .posts-navigation .nav-previous, .post-navigation .nav-previous {
@@ -899,6 +900,7 @@ embed, iframe, object {
     display: flex;
     max-width: 1024px;
     margin: auto;
+    border: 1px solid;
 }
 
 .site-header {
@@ -910,7 +912,7 @@ embed, iframe, object {
 .site-content {
     width: 100%;
     padding: 0 12px;
-    background: #eaeaea;
+    /* background: #eaeaea; */
 }
 
 .site-branding {
@@ -940,4 +942,97 @@ embed, iframe, object {
     display: block;
     color: #010101;
     font-family: 'DINCond-Light',Sans-Serif;
+}
+
+.front-page-grid-items,
+.taxonomy-page-grid-items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.front-page-grid-items article,
+.taxonomy-page-grid-items article{
+    width: 50%;
+    flex-shrink: 0;
+    margin-bottom: 32px;
+}
+
+.grid-thumb-image-container{
+    position: relative;
+    width: 100%;
+    padding-top: 62.5%;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(1);
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-filter: grayscale(1);
+    background-color: #f5f5f5;
+}
+
+.front-page-grid-items article:hover .grid-thumb-image-container,
+.front-page-grid-items article:focus .grid-thumb-image-container,
+.taxonomy-page-grid-items article:hover .grid-thumb-image-container,
+.taxonomy-page-grid-items article:focus .grid-thumb-image-container{
+    filter: none;
+    background-color: #dadada;
+}
+
+.front-page-grid-items .grid-item .entry-title,
+.taxonomy-page-grid-items .grid-item .entry-title{
+    margin: 0;
+    font-family: 'DINCond-Bold',Sans-Serif;
+    line-height: 1;
+    font-size: 18px;
+    width: 100%;
+}
+.front-page-grid-items .grid-item .entry-title a,
+.taxonomy-page-grid-items .grid-item .entry-title a{
+    text-decoration: none;
+    color: #010101;
+}
+.front-page-grid-items .entry-footer,
+.taxonomy-page-grid-items .entry-footer{
+    position: relative;
+    border-top: 1px solid #fff;
+    padding-left: 9px;
+}
+.front-page-grid-items .entry-footer:before,
+.taxonomy-page-grid-items .entry-footer:before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    border-right-width: 9px;
+    border-left-width: 9px;
+    border-bottom: 9px solid white;
+}
+
+.post-title-wrapper{
+    margin-top: 11px;
+    display: flex;
+    flex-direction: row;
+}
+
+.front-page-grid-items .grid-item .entry-footer p,
+.taxonomy-page-grid-items .grid-item .entry-footer p{
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1;
+    margin-top: 6px;
+}
+
+.front-page-grid-items .post-title-wrapper i,
+.taxonomy-page-grid-items .post-title-wrapper i{
+    margin-right: 22.5px;
+    margin-left: 10px;
 }
