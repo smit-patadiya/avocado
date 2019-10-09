@@ -54,6 +54,27 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
+@font-face {
+	font-family: 'DINCond-Regular';
+	src: url('fonts/DINCond-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'DINCond-Bold';
+	src: url('fonts/DINCond-Bold.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'DINCond-Light';
+	src: url('fonts/DINCond-Light.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 html {
 	line-height: 1.15; /* 1 */
 	-webkit-text-size-adjust: 100%; /* 2 */
@@ -133,6 +154,7 @@ abbr[title] {
 b,
 strong {
 	font-weight: bolder;
+	font-family: 'DINCond-Bold',Sans-Serif;
 }
 
 /**
@@ -396,7 +418,7 @@ select,
 optgroup,
 textarea {
 	color: #404040;
-	font-family: sans-serif;
+	font-family: 'DINCond-Regular',Sans-Serif;
 	font-size: 16px;
 	font-size: 1rem;
 	line-height: 1.5;
