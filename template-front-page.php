@@ -1,5 +1,6 @@
 <?php
 /**
+ * Template Name: Front Page
  *
  * Front Page Template
  *
