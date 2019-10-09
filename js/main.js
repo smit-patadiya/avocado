@@ -9,8 +9,8 @@
         var selectedOs = (selectedOsSlugs.length) ? selectedOsSlugs[0] : '';
 
         if ('' !== selectedOs) {
-            $('.front-page-grid-items .type-phone_app.grid-item:not(.os-' + selectedOs + ')').fadeOut();
-            $('.front-page-grid-items .type-phone_app.grid-item.os-' + selectedOs).fadeIn();
+            $('.front-page-grid-items .type-phone_app.grid-item:not(.os-' + selectedOs + ')').hide();
+            $('.front-page-grid-items .type-phone_app.grid-item.os-' + selectedOs).show();
         }
 
         $('#site-navigation #primary-menu .menu-item').removeClass('active-filter');
