@@ -902,11 +902,10 @@ embed, iframe, object {
 }
 
 #page {
-    padding: 68px 0;
+    padding: 68px 0 28px 0;
     display: flex;
     max-width: 1024px;
     margin: auto;
-    border: 1px solid;
 }
 
 .site-header {
@@ -1058,7 +1057,7 @@ embed, iframe, object {
     outline: none;
 }
 
-.front-page-load-more{
+.front-page-load-more {
     display: block;
     background: no-repeat;
     font-size: 15px;
@@ -1070,7 +1069,7 @@ embed, iframe, object {
     cursor: pointer;
 }
 
-.front-page-load-more:hover, .front-page-load-more:focus{
+.front-page-load-more:hover, .front-page-load-more:focus {
     background: #010101;
     color: #fff;
 }

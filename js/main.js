@@ -50,7 +50,7 @@
 
                 loadingStart();
 
-                // AJAX request
+                // AJAX request to fetch post data
                 var request = $.post(avocado_obj.ajax_url, {
                     action: 'load_phone_app_ajax_hook',
                     security: avocado_obj.ajax_nonce,
@@ -65,6 +65,7 @@
                     loadingCompleted();
 
                     if (response.success) {
+
                         var postData = response.data.content;
                         $(".front-page-grid-items").append(postData);
 
