@@ -22,7 +22,9 @@
     $('body.home #site-navigation #primary-menu .menu-item-filter-allapp a').on('click', function(event) {
 
         event.preventDefault();
+        $('#site-navigation #primary-menu .menu-item').removeClass('active-filter');
         $('.front-page-grid-items .type-phone_app.grid-item').fadeIn();
+        $(event.target).parent('.menu-item').addClass('active-filter');
 
     });
 
