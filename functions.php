@@ -43,31 +43,42 @@ if ( ! function_exists( 'avocado_setup' ) ) :
 		add_theme_support( 'post-thumbnails' );
 
 		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus( array(
-			'menu-1' => esc_html__( 'Primary', 'avocado' ),
-		) );
+		register_nav_menus(
+			array(
+				'menu-1' => esc_html__( 'Primary', 'avocado' ),
+			)
+		);
 
 		/*
 		 * Switch default core markup for search form, comment form, and comments
 		 * to output valid HTML5.
 		 */
-		add_theme_support( 'html5', array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-		) );
+		add_theme_support(
+			'html5',
+			array(
+				'search-form',
+				'comment-form',
+				'comment-list',
+				'gallery',
+				'caption',
+			)
+		);
 
 		// Set up the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( 'avocado_custom_background_args', array(
-			'default-color' => 'ffffff',
-			'default-image' => '',
-		) ) );
+		add_theme_support(
+			'custom-background',
+			apply_filters(
+				'avocado_custom_background_args',
+				array(
+					'default-color' => 'ffffff',
+					'default-image' => '',
+				)
+			)
+		);
 
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
-		
+
 	}
 endif;
 add_action( 'after_setup_theme', 'avocado_setup' );
@@ -93,15 +104,17 @@ add_action( 'after_setup_theme', 'avocado_content_width', 0 );
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function avocado_widgets_init() {
-	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar', 'avocado' ),
-		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'avocado' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
-	) );
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar', 'avocado' ),
+			'id'            => 'sidebar-1',
+			'description'   => esc_html__( 'Add widgets here.', 'avocado' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 add_action( 'widgets_init', 'avocado_widgets_init' );
 
@@ -112,22 +125,22 @@ function avocado_scripts() {
 	wp_enqueue_style( 'avocado-style', get_stylesheet_uri(), '' );
 
 	wp_enqueue_style( 'avocado-fontawesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css' );
-	
+
 	wp_enqueue_script( 'avocado-main', get_template_directory_uri() . '/js/main.js', array( 'jquery' ), '20151215', true );
 
-	wp_localize_script ( 
-		'avocado-main', 
-		'avocado_obj', 
-		array( 
-			'ajax_url'		=> admin_url( 'admin-ajax.php' ),
-			'ajax_nonce'	=> wp_create_nonce( 'avocado_nonce' ),
-			'load_more'		=> __( 'Load More', 'avocado' ),
-			'loading'		=> __( 'Loading...', 'avocado' ),
+	wp_localize_script(
+		'avocado-main',
+		'avocado_obj',
+		array(
+			'ajax_url'   => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce' => wp_create_nonce( 'avocado_nonce' ),
+			'load_more'  => __( 'Load More', 'avocado' ),
+			'loading'    => __( 'Loading...', 'avocado' ),
 		)
 	);
 
 	wp_enqueue_script( 'avocado-navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '20151215', true );
-	
+
 	wp_enqueue_script( 'avocado-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -138,7 +151,9 @@ add_action( 'wp_enqueue_scripts', 'avocado_scripts' );
 
 if ( ! function_exists( 'avocado_register_custom_taxonomy' ) ) {
 
-	// Register Custom Taxonomy
+	/**
+	 * Register Custom Taxonomy.
+	 */
 	function avocado_register_custom_taxonomy() {
 
 		$labels = array(
@@ -163,14 +178,14 @@ if ( ! function_exists( 'avocado_register_custom_taxonomy' ) ) {
 			'items_list'                 => __( 'OS list', 'avocado' ),
 			'items_list_navigation'      => __( 'OS list navigation', 'avocado' ),
 		);
-		$args = array(
-			'labels'                     => $labels,
-			'hierarchical'               => false,
-			'public'                     => true,
-			'show_ui'                    => true,
-			'show_admin_column'          => true,
-			'show_in_nav_menus'          => true,
-			'show_tagcloud'              => true,
+		$args   = array(
+			'labels'            => $labels,
+			'hierarchical'      => false,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => true,
 		);
 		register_taxonomy( 'os', array( 'phone_app' ), $args );
 
@@ -179,9 +194,11 @@ if ( ! function_exists( 'avocado_register_custom_taxonomy' ) ) {
 
 }
 
-if ( ! function_exists('avocado_register_custom_post_type') ) {
+if ( ! function_exists( 'avocado_register_custom_post_type' ) ) {
 
-	// Register Custom Post Type
+	/**
+	 * Register Custom Post Type.
+	 */
 	function avocado_register_custom_post_type() {
 
 		$labels = array(
@@ -213,25 +230,25 @@ if ( ! function_exists('avocado_register_custom_post_type') ) {
 			'items_list_navigation' => __( 'Phone Apps list navigation', 'avocado' ),
 			'filter_items_list'     => __( 'Filter Phone Apps list', 'avocado' ),
 		);
-		$args = array(
-			'label'                 => __( 'Phone App', 'avocado' ),
-			'description'           => __( 'Latest Phone Apps', 'avocado' ),
-			'labels'                => $labels,
-			'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
-			'taxonomies'            => array( 'os' ),
-			'hierarchical'          => false,
-			'public'                => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 5,
-			'menu_icon'             => 'dashicons-screenoptions',
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => true,
-			'can_export'            => true,
-			'has_archive'           => true,
-			'exclude_from_search'   => false,
-			'publicly_queryable'    => true,
-			'capability_type'       => 'post',
+		$args   = array(
+			'label'               => __( 'Phone App', 'avocado' ),
+			'description'         => __( 'Latest Phone Apps', 'avocado' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+			'taxonomies'          => array( 'os' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 5,
+			'menu_icon'           => 'dashicons-screenoptions',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
 		);
 		register_post_type( 'phone_app', $args );
 
@@ -270,67 +287,74 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 
-add_filter( 'wp_nav_menu_items', 'add_all_apps_link', 10, 2);
+add_filter( 'wp_nav_menu_items', 'add_all_apps_link', 10, 2 );
 
 /**
  * Add a All Apps Link in primary navigation
+ *
+ * @param string $items Menu item html.
+ * @param object $args Menu item arguments.
+ *
+ * @return string
+ *
+ * @since  1.0.0
  */
-function add_all_apps_link( $items, $args )
-{
-    if($args->theme_location == 'menu-1')
-    {
-		$archive_link = get_post_type_archive_link( 'phone_app' );
-		$items = '<li class="menu-item menu-item-type-taxonomy menu-item-filter-allapp"><a href="' . $archive_link . '">All apps</a></li>' . $items;
-    }
+function add_all_apps_link( $items, $args ) {
 
-    return $items;
+	if ( 'menu-1' === $args->theme_location ) {
+		$archive_link = get_post_type_archive_link( 'phone_app' );
+		$items        = '<li class="menu-item menu-item-type-taxonomy menu-item-filter-allapp"><a href="' . $archive_link . '">All apps</a></li>' . $items;
+	}
+
+	return $items;
 }
 
 if ( ! function_exists( 'load_more_phone_app_ajax_hook' ) ) {
 	/**
-	 * Send OTP .
+	 * Load more phone_app custom post type.
 	 */
 	function load_more_phone_app_ajax_hook() {
 
 		// If nonce verification fails die.
 		check_ajax_referer( 'avocado_nonce', 'security' );
 
-		$currentPage	= isset( $_POST['data']['currentPage'] ) ? $_POST['data']['currentPage'] : '';
-		$currentPage	= preg_replace( '/[^0-9]/', '', $currentPage );
-		$currentPage	= sanitize_text_field( wp_unslash( $currentPage ) );
+		$current_page = isset( $_POST['data']['currentPage'] ) ? $_POST['data']['currentPage'] : '';
+		$current_page = preg_replace( '/[^0-9]/', '', $current_page );
+		$current_page = sanitize_text_field( wp_unslash( $current_page ) );
 
-		$currentPostCount	= isset( $_POST['data']['currentPostCount'] ) ? $_POST['data']['currentPostCount'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-		$currentPostCount	= preg_replace( '/[^0-9]/', '', $currentPostCount );
-		$currentPostCount	= sanitize_text_field( wp_unslash( $currentPostCount ) );
+		$current_post_count = isset( $_POST['data']['currentPostCount'] ) ? $_POST['data']['currentPostCount'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$current_post_count = preg_replace( '/[^0-9]/', '', $current_post_count );
+		$current_post_count = sanitize_text_field( wp_unslash( $current_post_count ) );
 
 		$posts_per_page = get_option( 'posts_per_page' );
-		$new_page = $currentPage + 1;
+		$new_page       = $current_page + 1;
 
 		$offset = ( $new_page - 1 ) * $posts_per_page;
-		
-		$args = array (
-			'post_type'             => 'phone_app',
-			'post_status'           => 'publish',
-			'order'                 => 'DESC',
-			'orderby'               => 'ID',
-			'posts_per_page'        => $posts_per_page,
-			'page'					=> $new_page,
-			'offset'				=> $offset,
+
+		$args = array(
+			'post_type'      => 'phone_app',
+			'post_status'    => 'publish',
+			'order'          => 'DESC',
+			'orderby'        => 'ID',
+			'posts_per_page' => $posts_per_page,
+			'page'           => $new_page,
+			'offset'         => $offset,
 		);
 
-		$loop = new WP_Query( $args );
+		$loop        = new WP_Query( $args );
 		$total_pages = $loop->max_num_pages;
-		$post_count = $loop->post_count;
-		
+		$post_count  = $loop->post_count;
+
 		ob_start();
 
-		while ( $loop->have_posts() ) : $loop->the_post();
-			
-			// template for the content
+		while ( $loop->have_posts() ) :
+			$loop->the_post();
+
+			// Template for the content.
 			get_template_part( 'template-parts/page-grid' );
 
 		endwhile;
-		
+
 		$post_content = ob_get_contents();
 
 		ob_clean();
@@ -339,10 +363,10 @@ if ( ! function_exists( 'load_more_phone_app_ajax_hook' ) ) {
 
 		wp_send_json_success(
 			array(
-				'content' => $post_content,
-				'total_page'	=> $total_pages,
-				'post_count'	=> $post_count,
-				'current_page'	=> $new_page,
+				'content'      => $post_content,
+				'total_page'   => $total_pages,
+				'post_count'   => $post_count,
+				'current_page' => $new_page,
 			)
 		);
 	}
