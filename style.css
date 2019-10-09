@@ -563,7 +563,7 @@ a:visited {
 }
 
 a:hover, a:focus, a:active {
-    color: midnightblue;
+    color: #c1282d;
 }
 
 a:focus {
@@ -645,6 +645,9 @@ a:hover, a:active {
 .site-main .comment-navigation, .site-main .posts-navigation, .site-main .post-navigation {
     margin: 0 0 1.5em;
     overflow: hidden;
+    width: 100%;
+    border-top: 1px solid #010101;
+    padding-top: 20px;
 }
 
 .comment-navigation .nav-previous, .posts-navigation .nav-previous, .post-navigation .nav-previous {
@@ -656,6 +659,10 @@ a:hover, a:active {
     float: right;
     text-align: right;
     width: 50%;
+}
+
+.comments-navigation a, .posts-navigation a, .comment-navigation a, .post-navigation a {
+    color: #010101;
 }
 
 /*--------------------------------------------------------------
@@ -895,7 +902,7 @@ embed, iframe, object {
 }
 
 #page {
-    padding: 68px 0;
+    padding: 68px 0 28px 0;
     display: flex;
     max-width: 1024px;
     margin: auto;
@@ -910,7 +917,7 @@ embed, iframe, object {
 .site-content {
     width: 100%;
     padding: 0 12px;
-    background: #eaeaea;
+    /* background: #eaeaea; */
 }
 
 .site-branding {
@@ -940,4 +947,129 @@ embed, iframe, object {
     display: block;
     color: #010101;
     font-family: 'DINCond-Light',Sans-Serif;
+}
+
+.front-page-grid-items, .archive-page-grid-items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.front-page-grid-items article, .archive-page-grid-items article {
+    width: 50%;
+    flex-shrink: 0;
+    margin-bottom: 32px;
+}
+
+.grid-thumb-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 62.5%;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(1);
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-filter: grayscale(1);
+    background-color: #f5f5f5;
+}
+
+.front-page-grid-items article:hover .grid-thumb-image-container, .front-page-grid-items article:focus .grid-thumb-image-container, .archive-page-grid-items article:hover .grid-thumb-image-container, .archive-page-grid-items article:focus .grid-thumb-image-container {
+    filter: none;
+    background-color: #dadada;
+}
+
+.front-page-grid-items .grid-item .entry-title, .archive-page-grid-items .grid-item .entry-title {
+    margin: 0;
+    font-family: 'DINCond-Bold',Sans-Serif;
+    line-height: 1;
+    font-size: 18px;
+    width: 100%;
+}
+
+.front-page-grid-items .grid-item .entry-title a, .archive-page-grid-items .grid-item .entry-title a {
+    text-decoration: none;
+    color: #010101;
+}
+
+.front-page-grid-items .entry-footer, .archive-page-grid-items .entry-footer {
+    position: relative;
+    border-top: 1px solid #fff;
+    padding-left: 9px;
+}
+
+.front-page-grid-items .entry-footer:before, .archive-page-grid-items .entry-footer:before {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    border-right-width: 9px;
+    border-left-width: 9px;
+    border-bottom: 9px solid white;
+}
+
+.post-title-wrapper {
+    margin-top: 11px;
+    display: flex;
+    flex-direction: row;
+}
+
+.front-page-grid-items .grid-item .entry-footer p, .archive-page-grid-items .grid-item .entry-footer p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1;
+    margin-top: 6px;
+}
+
+.front-page-grid-items .post-title-wrapper i, .archive-page-grid-items .post-title-wrapper i {
+    margin-right: 22.5px;
+}
+
+#primary-menu {
+    display: block;
+    overflow: hidden;
+}
+
+#primary-menu .menu-item {
+    display: block;
+    width: 100%;
+    font-family: 'DINCond-Light',Sans-Serif;
+    font-size: 25px;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+#primary-menu .menu-item a {
+    color: #010101;
+}
+
+#primary-menu .menu-item a:hover, #primary-menu .menu-item a:focus, #primary-menu .menu-item.current-menu-item a, #primary-menu .menu-item.active-filter a {
+    color: #c1282d;
+    text-decoration: none;
+    outline: none;
+}
+
+.front-page-load-more {
+    display: block;
+    background: no-repeat;
+    font-size: 15px;
+    line-height: 1;
+    margin: auto;
+    padding: 5px 20px;
+    color: #010101;
+    border: 1px solid #010101;
+    cursor: pointer;
+}
+
+.front-page-load-more:hover, .front-page-load-more:focus {
+    background: #010101;
+    color: #fff;
 }
