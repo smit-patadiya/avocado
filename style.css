@@ -646,6 +646,8 @@ a:hover, a:active {
     margin: 0 0 1.5em;
     overflow: hidden;
     width: 100%;
+    border-top: 1px solid #010101;
+    padding-top: 20px;
 }
 
 .comment-navigation .nav-previous, .posts-navigation .nav-previous, .post-navigation .nav-previous {
@@ -658,6 +660,11 @@ a:hover, a:active {
     text-align: right;
     width: 50%;
 }
+
+.comments-navigation a, .posts-navigation a, .comment-navigation a, .post-navigation a{
+    color: #010101;
+}
+
 
 /*--------------------------------------------------------------
 # Accessibility
@@ -945,14 +952,14 @@ embed, iframe, object {
 }
 
 .front-page-grid-items,
-.taxonomy-page-grid-items {
+.archive-page-grid-items {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 .front-page-grid-items article,
-.taxonomy-page-grid-items article{
+.archive-page-grid-items article{
     width: 50%;
     flex-shrink: 0;
     margin-bottom: 32px;
@@ -976,14 +983,14 @@ embed, iframe, object {
 
 .front-page-grid-items article:hover .grid-thumb-image-container,
 .front-page-grid-items article:focus .grid-thumb-image-container,
-.taxonomy-page-grid-items article:hover .grid-thumb-image-container,
-.taxonomy-page-grid-items article:focus .grid-thumb-image-container{
+.archive-page-grid-items article:hover .grid-thumb-image-container,
+.archive-page-grid-items article:focus .grid-thumb-image-container{
     filter: none;
     background-color: #dadada;
 }
 
 .front-page-grid-items .grid-item .entry-title,
-.taxonomy-page-grid-items .grid-item .entry-title{
+.archive-page-grid-items .grid-item .entry-title{
     margin: 0;
     font-family: 'DINCond-Bold',Sans-Serif;
     line-height: 1;
@@ -991,18 +998,18 @@ embed, iframe, object {
     width: 100%;
 }
 .front-page-grid-items .grid-item .entry-title a,
-.taxonomy-page-grid-items .grid-item .entry-title a{
+.archive-page-grid-items .grid-item .entry-title a{
     text-decoration: none;
     color: #010101;
 }
 .front-page-grid-items .entry-footer,
-.taxonomy-page-grid-items .entry-footer{
+.archive-page-grid-items .entry-footer{
     position: relative;
     border-top: 1px solid #fff;
     padding-left: 9px;
 }
 .front-page-grid-items .entry-footer:before,
-.taxonomy-page-grid-items .entry-footer:before{
+.archive-page-grid-items .entry-footer:before{
     content: '';
     width: 0;
     height: 0;
@@ -1024,7 +1031,7 @@ embed, iframe, object {
 }
 
 .front-page-grid-items .grid-item .entry-footer p,
-.taxonomy-page-grid-items .grid-item .entry-footer p{
+.archive-page-grid-items .grid-item .entry-footer p{
     margin: 0;
     font-size: 12.5px;
     line-height: 1;
@@ -1032,7 +1039,7 @@ embed, iframe, object {
 }
 
 .front-page-grid-items .post-title-wrapper i,
-.taxonomy-page-grid-items .post-title-wrapper i{
+.archive-page-grid-items .post-title-wrapper i{
     margin-right: 22.5px;
-    margin-left: 10px;
+
 }

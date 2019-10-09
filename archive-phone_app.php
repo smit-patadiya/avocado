@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying archive pages of OS custom Taxonomy
+ * The template for displaying archive pages of phone_app custom post type
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *

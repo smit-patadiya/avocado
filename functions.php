@@ -113,7 +113,7 @@ function avocado_scripts() {
 
 	wp_enqueue_style( 'avocado-fontawesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css' );
 	
-	wp_enqueue_script( 'avocado-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'avocado-navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '20151215', true );
 
 	wp_enqueue_script( 'avocado-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
@@ -202,7 +202,7 @@ if ( ! function_exists('avocado_register_custom_post_type') ) {
 		);
 		$args = array(
 			'label'                 => __( 'Phone App', 'avocado' ),
-			'description'           => __( 'Phone Apps', 'avocado' ),
+			'description'           => __( 'Latest Phone Apps', 'avocado' ),
 			'labels'                => $labels,
 			'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 			'taxonomies'            => array( 'os' ),
