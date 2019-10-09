@@ -26,5 +26,66 @@
 
     });
 
+    // AJAX Load more for front page
+    if ('undefined' !== typeof (avocado_front_page)) {
+
+        var currentPage = 1;
+        var currentPostCount = avocado_front_page.post_count;
+        var totalPages = avocado_front_page.total_pages;
+
+        var loadingStart = function() {
+            $(".front-page-load-more").addClass('loading');
+            $(".front-page-load-more").html(avocado_obj.loading);
+        }
+
+        var loadingCompleted = function() {
+            $(".front-page-load-more").removeClass("loading");
+            $(".front-page-load-more").html(avocado_obj.load_more);
+        };
+
+        if (currentPage < totalPages) {
+
+            // On click for load more button
+            $('body ').on('click', '.front-page-load-more:not(.loading)', function() {
+
+                loadingStart();
+
+                // AJAX request
+                var request = $.post(avocado_obj.ajax_url, {
+                    action: 'load_phone_app_ajax_hook',
+                    security: avocado_obj.ajax_nonce,
+                    data: {
+                        currentPage: currentPage,
+                        currentPostCount: currentPostCount
+                    }
+                });
+
+                request.done(function(response) {
+
+                    loadingCompleted();
+
+                    if (response.success) {
+                        var postData = response.data.content;
+                        $(".front-page-grid-items").append(postData);
+
+                        currentPage = response.data.current_page;
+                        currentPostCount = response.data.post_count;
+                        totalPages = response.data.total_page;
+
+                        if (currentPage == totalPages) {
+                            $(".front-page-load-more").hide();
+                        }
+                    }
+
+                });
+
+                request.fail(function() {
+                    loadingCompleted();
+                });
+            });
+        }
+
+    }
+
 }
 )(jQuery);

@@ -115,6 +115,17 @@ function avocado_scripts() {
 	
 	wp_enqueue_script( 'avocado-main', get_template_directory_uri() . '/js/main.js', array( 'jquery' ), '20151215', true );
 
+	wp_localize_script ( 
+		'avocado-main', 
+		'avocado_obj', 
+		array( 
+			'ajax_url'		=> admin_url( 'admin-ajax.php' ),
+			'ajax_nonce'	=> wp_create_nonce( 'avocado_nonce' ),
+			'load_more'		=> __( 'Load More', 'avocado' ),
+			'loading'		=> __( 'Loading...', 'avocado' ),
+		)
+	);
+
 	wp_enqueue_script( 'avocado-navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '20151215', true );
 	
 	wp_enqueue_script( 'avocado-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
@@ -273,4 +284,69 @@ function add_all_apps_link( $items, $args )
     }
 
     return $items;
+}
+
+if ( ! function_exists( 'load_more_phone_app_ajax_hook' ) ) {
+	/**
+	 * Send OTP .
+	 */
+	function load_more_phone_app_ajax_hook() {
+
+		// If nonce verification fails die.
+		check_ajax_referer( 'avocado_nonce', 'security' );
+
+		$currentPage	= isset( $_POST['data']['currentPage'] ) ? $_POST['data']['currentPage'] : '';
+		$currentPage	= preg_replace( '/[^0-9]/', '', $currentPage );
+		$currentPage	= sanitize_text_field( wp_unslash( $currentPage ) );
+
+		$currentPostCount	= isset( $_POST['data']['currentPostCount'] ) ? $_POST['data']['currentPostCount'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$currentPostCount	= preg_replace( '/[^0-9]/', '', $currentPostCount );
+		$currentPostCount	= sanitize_text_field( wp_unslash( $currentPostCount ) );
+
+		$posts_per_page = get_option( 'posts_per_page' );
+		$new_page = $currentPage + 1;
+
+		$offset = ( $new_page - 1 ) * $posts_per_page;
+		
+		$args = array (
+			'post_type'             => 'phone_app',
+			'post_status'           => 'publish',
+			'order'                 => 'DESC',
+			'orderby'               => 'ID',
+			'posts_per_page'        => $posts_per_page,
+			'page'					=> $new_page,
+			'offset'				=> $offset,
+		);
+
+		$loop = new WP_Query( $args );
+		$total_pages = $loop->max_num_pages;
+		$post_count = $loop->post_count;
+		
+		ob_start();
+
+		while ( $loop->have_posts() ) : $loop->the_post();
+			
+			// template for the content
+			get_template_part( 'template-parts/page-grid' );
+
+		endwhile;
+		
+		$post_content = ob_get_contents();
+
+		ob_clean();
+
+		wp_reset_postdata();
+
+		wp_send_json_success(
+			array(
+				'content' => $post_content,
+				'total_page'	=> $total_pages,
+				'post_count'	=> $post_count,
+				'current_page'	=> $new_page,
+			)
+		);
+	}
+
+	add_action( 'wp_ajax_load_phone_app_ajax_hook', 'load_more_phone_app_ajax_hook' );
+	add_action( 'wp_ajax_nopriv_load_phone_app_ajax_hook', 'load_more_phone_app_ajax_hook' );
 }

@@ -1057,3 +1057,20 @@ embed, iframe, object {
     text-decoration: none;
     outline: none;
 }
+
+.front-page-load-more{
+    display: block;
+    background: no-repeat;
+    font-size: 15px;
+    line-height: 1;
+    margin: auto;
+    padding: 5px 20px;
+    color: #010101;
+    border: 1px solid #010101;
+    cursor: pointer;
+}
+
+.front-page-load-more:hover, .front-page-load-more:focus{
+    background: #010101;
+    color: #fff;
+}
