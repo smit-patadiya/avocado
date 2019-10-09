@@ -113,8 +113,10 @@ function avocado_scripts() {
 
 	wp_enqueue_style( 'avocado-fontawesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css' );
 	
-	wp_enqueue_script( 'avocado-navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '20151215', true );
+	wp_enqueue_script( 'avocado-main', get_template_directory_uri() . '/js/main.js', array( 'jquery' ), '20151215', true );
 
+	wp_enqueue_script( 'avocado-navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '20151215', true );
+	
 	wp_enqueue_script( 'avocado-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -254,4 +256,21 @@ require get_template_directory() . '/inc/customizer.php';
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
+}
+
+
+add_filter( 'wp_nav_menu_items', 'add_all_apps_link', 10, 2);
+
+/**
+ * Add a All Apps Link in primary navigation
+ */
+function add_all_apps_link( $items, $args )
+{
+    if($args->theme_location == 'menu-1')
+    {
+		$archive_link = get_post_type_archive_link( 'phone_app' );
+		$items = '<li class="menu-item menu-item-type-taxonomy menu-item-filter-allapp"><a href="' . $archive_link . '">All apps</a></li>' . $items;
+    }
+
+    return $items;
 }
