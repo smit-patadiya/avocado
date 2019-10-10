@@ -582,6 +582,7 @@ a:hover, a:active {
     display: block;
     float: left;
     width: 100%;
+    margin-bottom: 60px;
 }
 
 .main-navigation ul {
@@ -901,15 +902,19 @@ embed, iframe, object {
     display: block;
 }
 
+/*
+ * Custom Style Start
+ */
 #page {
-    padding: 68px 0 28px 0;
+    padding: 68px 0 10px 0;
     display: flex;
     max-width: 1024px;
     margin: auto;
+    flex-direction: column;
 }
 
 .site-header {
-    width: 268px;
+    width: 250px;
     padding: 0 12px 0 49px;
     flex-shrink: 0;
 }
@@ -940,6 +945,10 @@ embed, iframe, object {
     font-family: 'DINCond-Bold',Sans-Serif;
 }
 
+.site-branding .site-title a:hover, .site-branding .site-title a:focus {
+    color: #c1282d;
+}
+
 .site-branding .site-description {
     font-size: 31.25px;
     line-height: 1;
@@ -956,15 +965,15 @@ embed, iframe, object {
 }
 
 .front-page-grid-items article, .archive-page-grid-items article {
-    width: 50%;
     flex-shrink: 0;
-    margin-bottom: 32px;
+    margin-bottom: 35px;
+    width: 100%;
 }
 
 .grid-thumb-image-container {
     position: relative;
     width: 100%;
-    padding-top: 62.5%;
+    padding-top: 62.67%;
     background-size: cover;
     background-position: center;
     filter: grayscale(1);
@@ -1072,4 +1081,14 @@ embed, iframe, object {
 .front-page-load-more:hover, .front-page-load-more:focus {
     background: #010101;
     color: #fff;
+}
+
+@media (min-width: 768px) {
+    #page {
+        flex-direction: row;
+    }
+
+    .front-page-grid-items article, .archive-page-grid-items article {
+        width: 50%;
+    }
 }

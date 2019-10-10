@@ -9,8 +9,8 @@
         var selectedOs = (selectedOsSlugs.length) ? selectedOsSlugs[0] : '';
 
         if ('' !== selectedOs) {
-            $('.front-page-grid-items .type-phone_app.grid-item:not(.os-' + selectedOs + ')').fadeOut();
-            $('.front-page-grid-items .type-phone_app.grid-item.os-' + selectedOs).fadeIn();
+            $('.front-page-grid-items .type-phone_app.grid-item:not(.os-' + selectedOs + ')').hide();
+            $('.front-page-grid-items .type-phone_app.grid-item.os-' + selectedOs).show();
         }
 
         $('#site-navigation #primary-menu .menu-item').removeClass('active-filter');
@@ -22,7 +22,9 @@
     $('body.home #site-navigation #primary-menu .menu-item-filter-allapp a').on('click', function(event) {
 
         event.preventDefault();
+        $('#site-navigation #primary-menu .menu-item').removeClass('active-filter');
         $('.front-page-grid-items .type-phone_app.grid-item').fadeIn();
+        $(event.target).parent('.menu-item').addClass('active-filter');
 
     });
 
