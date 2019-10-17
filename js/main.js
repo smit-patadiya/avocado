@@ -1,92 +1,157 @@
-(function($) {
+(function ($) {
 
-    // Filter OS
-    $('body.home #site-navigation #primary-menu .menu-item-object-os a').on('click', function(event) {
-        event.preventDefault();
+    function FrontPageFunc () {
 
-        var itemLink = $(event.target).attr('href').replace(/^\/|\/$/g, '');
+        this.menuItems = $('#primary-menu .menu-item');
+        this.appGridItemSelector = '.front-page-grid-items .type-phone_app.grid-item';
+        this.currentPage = 1;
+        this.currentPostCount = 0;
+        this.totalPages = 0;
+        this.loadMoreButton = $(".front-page-load-more");
+        this.ajaxUrl = avocado_obj.ajax_url;
+        this.ajaxNonce = avocado_obj.ajax_nonce;
+        this.textLoading = avocado_obj.loading;
+        this.textLoadMore = avocado_obj.load_more;
+    }
+
+    //The init function
+    FrontPageFunc.prototype.init = function () {
+
+        if ('undefined' !== typeof (avocado_front_page)) {
+            this.currentPostCount = avocado_front_page.post_count;
+            this.totalPages = avocado_front_page.total_pages;
+        }
+
+        this.bindEvents();
+
+    }
+
+    //Get Selected OS based on selected filter
+    FrontPageFunc.prototype.getSelectedOs = function (eventTarget) {
+
+        var itemLink = $(eventTarget).attr('href').replace(/^\/|\/$/g, '');
         var selectedOsSlugs = itemLink.split('/').reverse();
-        var selectedOs = (selectedOsSlugs.length) ? selectedOsSlugs[0] : '';
+        return (selectedOsSlugs.length) ? selectedOsSlugs[0] : '';
 
-        if ('' !== selectedOs) {
-            $('.front-page-grid-items .type-phone_app.grid-item:not(.os-' + selectedOs + ')').hide();
-            $('.front-page-grid-items .type-phone_app.grid-item.os-' + selectedOs).show();
+    }
+
+    //Bind Events
+    FrontPageFunc.prototype.bindEvents = function () {
+
+        //Filter OS based selected filter
+        this.handleFilterOs = this.handleFilterOs.bind(this);
+        $(document).on('click', '#primary-menu .menu-item-object-os a', this.handleFilterOs);
+
+        //Display All OS
+        this.handleDisplayAllOs = this.handleDisplayAllOs.bind(this);
+        $(document).on('click', '#primary-menu .menu-item-filter-allapp a', this.handleDisplayAllOs);
+
+        //Load More Apps on click
+        if (this.currentPage < this.totalPages) {
+
+            this.handleOnClickLoadMore = this.handleOnClickLoadMore.bind(this);
+            $(document).on('click', '.front-page-load-more:not(.loading)', this.handleOnClickLoadMore);
+
         }
+    }
 
-        $('#site-navigation #primary-menu .menu-item').removeClass('active-filter');
-        $(event.target).parent('.menu-item').addClass('active-filter');
+    //Filter OS based selected filter
+    FrontPageFunc.prototype.handleFilterOs = function (event) {
 
-    });
-
-    // Display All OS
-    $('body.home #site-navigation #primary-menu .menu-item-filter-allapp a').on('click', function(event) {
-
+        var that = this;
         event.preventDefault();
-        $('#site-navigation #primary-menu .menu-item').removeClass('active-filter');
-        $('.front-page-grid-items .type-phone_app.grid-item').fadeIn();
+
+        var selectedOs = that.getSelectedOs(event.target);
+        if ('' !== selectedOs) {
+            $(that.appGridItemSelector + ':not(.os-' + selectedOs + ')').hide();
+            $(that.appGridItemSelector + '.os-' + selectedOs).show();
+        }
+
+        that.menuItems.removeClass('active-filter');
         $(event.target).parent('.menu-item').addClass('active-filter');
 
-    });
+    }
 
-    // AJAX Load more for front page
-    if ('undefined' !== typeof (avocado_front_page)) {
+    //Diplay All OS
+    FrontPageFunc.prototype.handleDisplayAllOs = function (event) {
 
-        var currentPage = 1;
-        var currentPostCount = avocado_front_page.post_count;
-        var totalPages = avocado_front_page.total_pages;
+        var that = this;
+        event.preventDefault();
 
-        var loadingStart = function() {
-            $(".front-page-load-more").addClass('loading');
-            $(".front-page-load-more").html(avocado_obj.loading);
-        }
+        $(that.appGridItemSelector).show();
+        that.menuItems.removeClass('active-filter');
+        $(event.target).parent('.menu-item').addClass('active-filter');
 
-        var loadingCompleted = function() {
-            $(".front-page-load-more").removeClass("loading");
-            $(".front-page-load-more").html(avocado_obj.load_more);
-        };
+    }
 
-        if (currentPage < totalPages) {
+    //Loading Start
+    FrontPageFunc.prototype.loadingStart = function () {
 
-            // On click for load more button
-            $('body ').on('click', '.front-page-load-more:not(.loading)', function() {
+        this.loadMoreButton.addClass('loading');
+        this.loadMoreButton.html(avocado_obj.loading);
 
-                loadingStart();
+    }
 
-                // AJAX request to fetch post data
-                var request = $.post(avocado_obj.ajax_url, {
-                    action: 'load_phone_app_ajax_hook',
-                    security: avocado_obj.ajax_nonce,
-                    data: {
-                        currentPage: currentPage,
-                        currentPostCount: currentPostCount
-                    }
-                });
+    //Loading Completed
+    FrontPageFunc.prototype.loadingCompleted = function () {
 
-                request.done(function(response) {
+        this.loadMoreButton.removeClass('loading');
+        this.loadMoreButton.html(avocado_obj.load_more);
 
-                    loadingCompleted();
+    }
 
-                    if (response.success) {
+    //Hanlde Load More AJAX
+    FrontPageFunc.prototype.handleOnClickLoadMore = function () {
 
-                        var postData = response.data.content;
-                        $(".front-page-grid-items").append(postData);
+        var that = this;
 
-                        currentPage = response.data.current_page;
-                        currentPostCount = response.data.post_count;
-                        totalPages = response.data.total_page;
+        that.loadingStart();
 
-                        if (currentPage == totalPages) {
-                            $(".front-page-load-more").hide();
-                        }
-                    }
+        // AJAX request to fetch post data
+        var request = $.post(that.ajaxUrl, {
+            action: 'load_phone_app_ajax_hook',
+            security: that.ajaxNonce,
+            data: {
+                currentPage: that.currentPage,
+                currentPostCount: that.currentPostCount
+            }
+        });
 
-                });
+        request.done(function (response) {
 
-                request.fail(function() {
-                    loadingCompleted();
-                });
-            });
-        }
+            that.loadingCompleted();
+
+            if (response.success) {
+
+                var postData = response.data.content;
+                $(".front-page-grid-items").append(postData);
+
+                that.currentPage = response.data.current_page;
+                that.currentPostCount = response.data.post_count;
+                that.totalPages = response.data.total_page;
+
+                if (that.currentPage == that.totalPages) {
+
+                    that.loadMoreButton.hide();
+
+                }
+            }
+
+        });
+
+        request.fail(function () {
+
+            that.loadingCompleted();
+
+        });
+
+    }
+
+    //Initialize Front Page functionality 
+    if ('undefined' !== typeof (avocado_obj) && avocado_obj.isFrontPage) {
+
+        var frontPage = new FrontPageFunc();
+        frontPage.init();
 
     }
 
