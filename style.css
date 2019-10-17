@@ -908,7 +908,7 @@ embed, iframe, object {
 #page {
     padding: 68px 0 10px 0;
     display: flex;
-    max-width: 1024px;
+    max-width: 1920px;
     margin: auto;
     flex-direction: column;
 }
