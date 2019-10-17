@@ -28,6 +28,7 @@ function avocado_scripts() {
 			'ajax_nonce' => wp_create_nonce( 'avocado_nonce' ),
 			'load_more'  => __( 'Load More', 'avocado' ),
 			'loading'    => __( 'Loading...', 'avocado' ),
+			'isFrontPage' => is_page_template('template-front-page.php')
 		)
 	);
 
