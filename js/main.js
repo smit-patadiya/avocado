@@ -55,6 +55,14 @@
         }
     }
 
+    //Change color of active filter link
+    FrontPageFunc.prototype.handleActiveFilterLinkStyle = function (eventTarget) {
+        
+        that.menuItems.removeClass('active-filter');
+        $(eventTarget).parent('.menu-item').addClass('active-filter');
+    
+    }
+
     //Filter OS based selected filter
     FrontPageFunc.prototype.handleFilterOs = function (event) {
 
@@ -67,8 +75,7 @@
             $(that.appGridItemSelector + '.os-' + selectedOs).show();
         }
 
-        that.menuItems.removeClass('active-filter');
-        $(event.target).parent('.menu-item').addClass('active-filter');
+        that.handleActiveFilterLinkStyle(event.target)
 
     }
 
@@ -79,8 +86,7 @@
         event.preventDefault();
 
         $(that.appGridItemSelector).show();
-        that.menuItems.removeClass('active-filter');
-        $(event.target).parent('.menu-item').addClass('active-filter');
+        that.handleActiveFilterLinkStyle(event.target)
 
     }
 
